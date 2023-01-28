@@ -1,14 +1,14 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Overlay, ModalWrapper } from './Modal.styled';
+import { OverlayDiv, ModalWrapperDiv } from './Modal.styled';
 
 const Modal = () => {
     return (
-        <Overlay>
-            <ModalWrapper>
+        <OverlayDiv>
+            <ModalWrapperDiv>
                 <img src="" alt="" />
-            </ModalWrapper>
-        </Overlay>
+            </ModalWrapperDiv>
+        </OverlayDiv>
     )
 }
 
