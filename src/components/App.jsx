@@ -1,7 +1,7 @@
 import { PureComponent } from 'react';
 
 import { AppWrapperDiv, Message } from './App.styled';
-import  getPhoto  from './API';
+import getPhoto from './API';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button';
@@ -18,11 +18,10 @@ export class App extends PureComponent {
     totalPages: 0,
     per_page: 12,
   };
-  componentDidMount() {
-    }
+  componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState) {
-    console.log('ComponentDidUpdate');
+   
     const { query, page } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
@@ -33,8 +32,8 @@ export class App extends PureComponent {
   async fetchPhotos() {
     try {
       this.setState({ loading: true });
-      const { query, page , per_page} = this.state;
-      const { hits , totalHits } = await getPhoto(query, page, per_page);
+      const { query, page, per_page } = this.state;
+      const { hits, totalHits } = await getPhoto(query, page, per_page);
       this.setState(({ photos }) => ({
         photos: [...photos, ...hits],
         totalPages: totalHits / per_page,
@@ -66,7 +65,7 @@ export class App extends PureComponent {
     this.setState({ showModal: false });
   };
   render() {
-    const { loading, photos, showModal , largeImageURL } = this.state;
+    const { loading, photos, showModal, largeImageURL } = this.state;
     return (
       <>
         <AppWrapperDiv>
