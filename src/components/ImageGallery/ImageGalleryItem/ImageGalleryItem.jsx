@@ -1,17 +1,18 @@
 // import PropTypes from 'prop-types';
 import { GalleryItem, GalleryItemImage } from './ImageGalleryItem.styled';
 
-const ImageGalleryItem = ({ webformatURL, openBigPic, largeImageURL , tags }) => {
+const ImageGalleryItem = ({ webformatURL, getLargeImg, largeImageURL }) => {
   return (
     <GalleryItem>
       <GalleryItemImage
-        onClick={() => openBigPic(largeImageURL)}
+        onClick={() => getLargeImg(largeImageURL)}
         src={webformatURL}
-        alt={tags}
+        alt=""
       />
     </GalleryItem>
   );
 };
+
 export default ImageGalleryItem;
 
 ImageGalleryItem.propType = {

@@ -2,11 +2,11 @@
 import { Gallery } from './ImageGallery.styled';
 import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 
-const ImageGallery = ({ photos, openBigPic }) => {
+const ImageGallery = ({ photos, getLargeImg }) => {
   const elements = photos.map(({ id, webformatURL, largeImageURL }) => (
-    <ImageGalleryItem key={id}
-      getLargeImg={openBigPic}
-      
+    <ImageGalleryItem
+      getLargeImg={getLargeImg}
+      key={webformatURL}
       webformatURL={webformatURL}
       largeImageURL={largeImageURL}
     />
@@ -20,5 +20,3 @@ export default ImageGallery;
 //     photos: []
 // }
 
-ImageGallery.propType = {
-};
