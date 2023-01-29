@@ -6,11 +6,11 @@ const PARAMS = 'image_type=photo&orientation=horizontal';
 
 axios.defaults.baseURL = BASE_URL;
 
- const getPhoto = async ( query, page, per_Page) => {
+ const getPhoto = async ( query, page, per_page) => {
     
     try {
         const {data} = await axios.get(
-          `${BASE_URL}?key=${API_KEY}&q=${query}&page=${page}&${PARAMS}&per_page=${per_Page}`
+          `${BASE_URL}?key=${API_KEY}&q=${query}&page=${page}&${PARAMS}&per_page=${per_page}`
         );
         // console.log('DATA', data);
         return data;

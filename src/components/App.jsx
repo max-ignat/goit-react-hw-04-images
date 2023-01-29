@@ -18,11 +18,12 @@ export class App extends PureComponent {
     totalPages: 0,
     per_page: 12,
   };
-  componentDidMount() {}
+  componentDidMount() {
+    }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log('ComponentDidUpdate');
-    const { query, page , per_page } = this.state;
+    console.log('ComponentDidUpdate');
+    const { query, page } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
       this.fetchPhotos();
@@ -32,11 +33,11 @@ export class App extends PureComponent {
   async fetchPhotos() {
     try {
       this.setState({ loading: true });
-      const { query, page } = this.state;
-      const { hits , totalHits } = await getPhoto(query, page);
+      const { query, page , per_page} = this.state;
+      const { hits , totalHits } = await getPhoto(query, page, per_page);
       this.setState(({ photos }) => ({
         photos: [...photos, ...hits],
-        totalPages: totalHits / this.state.per_page,
+        totalPages: totalHits / per_page,
       }));
     } catch (error) {
       this.setState({ error: error.message });
