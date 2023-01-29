@@ -8,3 +8,9 @@ export const AppWrapperDiv = styled.div`
 `;
 
 
+export const Message = styled.p`
+font-size: 20px;
+font-weight:600;
+text-align: center;
+color: lightgray;
+`
