@@ -34,12 +34,13 @@ export class Searchbar extends Component {
   };
 
   handleSubmit = event => {
+    const { query } = this.state;
     event.preventDefault();
-   if (this.state.query.trim() === '') {
+   if (query.trim() === '') {
      return Notiflix.Notify.warning('Please enter your query');
     }
     
-    this.props.qwe(...this.state.query);
+    this.props.qwe(query);
     this.reset();
   };
 

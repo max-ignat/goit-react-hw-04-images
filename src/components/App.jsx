@@ -1,5 +1,4 @@
 import { PureComponent } from 'react';
-
 import { AppWrapperDiv, Message } from './App.styled';
 import getPhoto from './API';
 import Searchbar from './Searchbar';
@@ -22,10 +21,11 @@ export class App extends PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
    
-    const { query, page } = this.state;
+    const { query, page, } = this.state;
 
     if (prevState.query !== query || prevState.page !== page) {
       this.fetchPhotos();
+      
     }
   }
 
@@ -37,7 +37,8 @@ export class App extends PureComponent {
       this.setState(({ photos }) => ({
         photos: [...photos, ...hits],
         totalPages: totalHits / per_page,
-      }));
+      }))
+        console.log('QUERY =>',this.state.query);
     } catch (error) {
       this.setState({ error: error.message });
     } finally {
