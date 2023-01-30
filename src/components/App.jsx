@@ -1,6 +1,6 @@
 import { PureComponent } from 'react';
 import { AppWrapperDiv, Message } from './App.styled';
-import getPhoto from '../services/API';
+import getPhoto from './services/API';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button';

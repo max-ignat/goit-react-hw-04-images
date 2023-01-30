@@ -10,7 +10,7 @@ import axios from 'axios';
     
     try {
         const { data } = await axios.get(
-          `https://pixabay.com/api/?key=31187962-e7df80d652d1f0f281ee6ae38}&q=${query}&page=${page}&image_type=photo&orientation=horizontal&per_page=${per_page}`
+          `https://pixabay.com/api/?key=31187962-e7df80d652d1f0f281ee6ae38&q=${query}&page=${page}&image_type=photo&orientation=horizontal&per_page=${per_page}`
         );
         // console.log('DATA', data);
         return data;
