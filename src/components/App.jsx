@@ -1,92 +1,94 @@
-import { PureComponent } from 'react';
-import { AppWrapperDiv, Message } from './App.styled';
+import { useState, useEffect } from 'react';
+import { AppWrapperDiv } from './App.styled';
 import getPhoto from './services/API';
 import Searchbar from './Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button';
-
+import PacmanLoader from 'react-spinners/FadeLoader';
 import Modal from './Modal/Modal';
 
-export class App extends PureComponent {
-  state = {
-    photos: [],
-    query: '',
-    loading: false,
-    error: null,
-    page: 1,
-    totalPages: 0,
-    per_page: 12,
-  };
-  componentDidMount() {}
+export const App = () => {
+  const [photos, setPhotos] = useState([]);
+  const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotallPages] = useState(0);
+  const [per_page] = useState(12);
+  // const isFirstRender = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [largeImageURL, setLargeImageURL] = useState(null);
 
-  componentDidUpdate(prevProps, prevState) {
-   
-    const { query, page, } = this.state;
-
-    if (prevState.query !== query || prevState.page !== page) {
-      this.fetchPhotos();
-      
+  useEffect(() => {
+    if (query === '') {
+      return;
     }
-  }
+    const fetchPhotos = async (page, query) => {
+      try {
+        setLoading(true);
+        const { hits, totalHits } = await getPhoto(query, page, per_page);
 
-  async fetchPhotos() {
-    try {
-      this.setState({ loading: true });
-      const { query, page, per_page } = this.state;
-      const { hits, totalHits } = await getPhoto(query, page, per_page);
-      this.setState(({ photos }) => ({
-        photos: [...photos, ...hits],
-        totalPages: totalHits / per_page,
-      }))
-        console.log('QUERY =>',this.state.query);
-    } catch (error) {
-      this.setState({ error: error.message });
-    } finally {
-      this.setState({ loading: false });
-    }
-  }
+        setPhotos(photos => [...photos, ...hits]);
+        setTotallPages(totalHits / per_page);
+        console.log('QUERY =>', query);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPhotos(page, query);
+  }, [query, page, per_page]);
 
-  handleFormSubmit = query => {
-    this.setState({ query, page: 1, photos: [] });
+  const handleFormSubmit = query => {
+    setQuery(query);
+    setPage(1);
+    setPhotos([]);
   };
 
-  loadMore = e => {
+  const loadMore = e => {
     console.log('load more');
-    this.setState(({ page }) => ({ page: page + 1 }));
+    setPage(page => page + 1);
   };
 
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  const getLargeImg = largeImageURL => {
+    setShowModal(true);
+    setLargeImageURL(largeImageURL);
+  };
+  const onCloseModal = () => {
+    setShowModal(false);
   };
 
-  getLargeImg = largeImageURL => {
-    this.setState({ showModal: true, largeImageURL: largeImageURL });
+  const override = {
+    // display: 'block',
+    margin: '0 auto',
+    // borderColor: 'red',
   };
-  onCloseModal = () => {
-    this.setState({ showModal: false });
-  };
-  render() {
-    const { loading, photos, showModal, largeImageURL } = this.state;
-    return (
-      <>
-        <AppWrapperDiv>
-          <Searchbar submitPropValue={this.handleFormSubmit} />
-          {loading && <Message>...Loading content</Message>}
-          {/* {!photos.length && <Message >Nothing found</Message>} */}
 
-          <ImageGallery
-            photos={this.state.photos}
-            getLargeImg={this.getLargeImg}
+  return (
+    <>
+      <AppWrapperDiv>
+        <Searchbar submitPropValue={handleFormSubmit} />
+        {loading && (
+          <PacmanLoader
+            color={'#3f51b5'}
+            loading={loading}
+            cssOverride={override}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
           />
+        )}
 
-          {photos.length > 0 && photos.length >= 12 && (
-            <Button text="Load more" onLoadMore={this.loadMore} />
-          )}
-          {showModal && (
-            <Modal largeImageURL={largeImageURL} onClose={this.onCloseModal} />
-          )}
-        </AppWrapperDiv>
-      </>
-    );
-  }
-}
+        <ImageGallery photos={photos} getLargeImg={getLargeImg} />
+
+        {photos.length > 0 && photos.length >= 12 && (
+          <Button text="Load more" onLoadMore={loadMore} />
+        )}
+        {showModal && (
+          <Modal largeImageURL={largeImageURL} onClose={onCloseModal} />
+        )}
+      </AppWrapperDiv>
+    </>
+  );
+};
