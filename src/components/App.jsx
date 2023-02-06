@@ -70,7 +70,7 @@ export class App extends PureComponent {
     return (
       <>
         <AppWrapperDiv>
-          <Searchbar qwe={this.handleFormSubmit} />
+          <Searchbar submitPropValue={this.handleFormSubmit} />
           {loading && <Message>...Loading content</Message>}
           {/* {!photos.length && <Message >Nothing found</Message>} */}
 
