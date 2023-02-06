@@ -11,9 +11,9 @@ export const App = () => {
   const [photos, setPhotos] = useState([]);
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [, setError] = useState(null);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotallPages] = useState(0);
+  const [, setTotallPages] = useState(0);
   const [per_page] = useState(12);
   // const isFirstRender = useState(true);
   const [showModal, setShowModal] = useState(false);
