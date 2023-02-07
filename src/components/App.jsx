@@ -6,6 +6,8 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button';
 import PacmanLoader from 'react-spinners/FadeLoader';
 import Modal from './Modal/Modal';
+import Notiflix from 'notiflix';
+
 
 export const App = () => {
   const [photos, setPhotos] = useState([]);
@@ -30,6 +32,11 @@ export const App = () => {
 
         setPhotos(photos => [...photos, ...hits]);
         setTotallPages(totalHits / per_page);
+
+        if (totalHits === 0) {
+           return Notiflix.Notify.failure('Nothing found');
+          // console.log(' nothing found');
+        }
         console.log('QUERY =>', query);
       } catch (error) {
         setError(error.message);
@@ -68,7 +75,7 @@ export const App = () => {
   return (
     <>
       <AppWrapperDiv>
-        <Searchbar submitPropValue={handleFormSubmit} />
+        <Searchbar submitPropValue={handleFormSubmit}> </Searchbar>
         {loading && (
           <PacmanLoader
             color={'#3f51b5'}
@@ -79,7 +86,7 @@ export const App = () => {
             data-testid="loader"
           />
         )}
-
+        
         <ImageGallery photos={photos} getLargeImg={getLargeImg} />
 
         {photos.length > 0 && photos.length >= 12 && (
