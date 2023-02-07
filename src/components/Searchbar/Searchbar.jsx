@@ -54,7 +54,8 @@ const Searchbar = ({ submitPropValue }) => {
 };
 
   const transfer = e => {
-    document.location.href = '/public/index.html'
+    document.location.href =
+      'https://max-ignat.github.io/goit-react-hw-04-images/';
     setLoading(true)
   }
   return (
