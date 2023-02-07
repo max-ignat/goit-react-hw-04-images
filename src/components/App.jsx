@@ -11,6 +11,7 @@ import Notiflix from 'notiflix';
 
 export const App = () => {
   const [photos, setPhotos] = useState([]);
+ 
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [, setError] = useState(null);
@@ -21,6 +22,8 @@ export const App = () => {
   const [showModal, setShowModal] = useState(false);
   const [largeImageURL, setLargeImageURL] = useState(null);
 
+ 
+
   useEffect(() => {
     if (query === '') {
       return;
@@ -29,7 +32,8 @@ export const App = () => {
       try {
         setLoading(true);
         const { hits, totalHits } = await getPhoto(query, page, per_page);
-
+        
+        
         setPhotos(photos => [...photos, ...hits]);
         setTotallPages(totalHits / per_page);
 
@@ -99,3 +103,4 @@ export const App = () => {
     </>
   );
 };
+

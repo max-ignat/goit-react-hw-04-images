@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Notiflix from 'notiflix';
 import PacmanLoader from 'react-spinners/BeatLoader';
 import { ImSearch, ImHome } from 'react-icons/im';
-import { useState }  from 'react';
+import { useState } from 'react';
 
 import {
   SearchbarHeader,
@@ -22,23 +22,19 @@ const Searchbar = ({ submitPropValue }) => {
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = event => {
-    // setQuery({ query: event.currentTarget.value.toLowerCase() });
-    const { value } = event.currentTarget;
-    setQuery(value);
+    setQuery( event.currentTarget.value.toLowerCase());
+    // const { value } = event.currentTarget;
+    // setQuery(value);
   };
 
-
   const handleSubmit = event => {
-
     event.preventDefault();
     if (query.trim() === '') {
       return Notiflix.Notify.warning('Please enter your query');
     }
-   if (query === 0) {
-     console.log(' nothing found');
-   }
-
-    submitPropValue( query );
+    
+    // !передаем значение query в проп наверх
+    submitPropValue(query);
     reset();
   };
 
@@ -47,17 +43,16 @@ const Searchbar = ({ submitPropValue }) => {
   };
 
   const override = {
-  
-  // display: 'block',
-  // margin: '0 auto',
-  // borderColor: 'red',
-};
+    // display: 'block',
+    // margin: '0 auto',
+    // borderColor: 'red',
+  };
 
   const transfer = e => {
     document.location.href =
       'https://max-ignat.github.io/goit-react-hw-04-images/';
-    setLoading(true)
-  }
+    setLoading(true);
+  };
   return (
     <SearchbarHeader>
       <SearchForm onSubmit={handleSubmit}>
